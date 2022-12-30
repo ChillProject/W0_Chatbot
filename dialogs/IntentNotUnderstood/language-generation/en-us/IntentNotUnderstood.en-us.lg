@@ -1,0 +1,9 @@
+[import](common.lg)
+
+# SendActivity_YMFW2o()
+[Activity
+    Text = ${SendActivity_YMFW2o_text()}
+]
+
+# SendActivity_YMFW2o_text()
+- Sorry, this bot is not artifically intelligent enough to interpret the previous prompt.

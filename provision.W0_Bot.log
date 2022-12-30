@@ -1,0 +1,14 @@
+{
+  "profileName": "W0_Bot",
+  "jobId": "af07b676-9769-4d3c-b250-46894c51ed61",
+  "projectId": "93230.13696007458",
+  "time": "2022-12-30T09:10:17.087Z",
+  "log": [
+    "Creating Azure resources...",
+    "Checking the Existence of the Resource Group ...",
+    "Use the Resource Group: TEMG_UBS at eastasia",
+    "Deploying Luis Authoring Resource ...",
+    "Deploying Luis Resource ...",
+    "Provisioning completed successfully!"
+  ]
+}

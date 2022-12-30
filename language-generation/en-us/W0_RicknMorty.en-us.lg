@@ -1,0 +1,45 @@
+[import](common.lg)
+
+# SendActivity_Greeting()
+[Activity
+    Text = ${SendActivity_Greeting_text()}
+]
+
+# SendActivity_Greeting_text()
+- Welcome to the Rick and Morty bot.
+# ChoiceInput_Prompt_KCiOWu()
+[Activity
+    Text = ${ChoiceInput_Prompt_KCiOWu_text()}
+    SuggestedActions = Character Details | Location Details | Episode Details
+]
+
+# ChoiceInput_Prompt_KCiOWu_text()
+- What do you want to know about?
+# TextInput_Prompt_X5jcm5()
+[Activity
+    Text = ${TextInput_Prompt_X5jcm5_text()}
+]
+
+# TextInput_Prompt_X5jcm5_text()
+- Who do you want to know more about?
+# TextInput_Prompt_PWRV3n()
+[Activity
+    Text = ${TextInput_Prompt_PWRV3n_text()}
+]
+
+# TextInput_Prompt_PWRV3n_text()
+- Which Location do you want to learn more about?
+# TextInput_Prompt_qKFZZs()
+[Activity
+    Text = ${TextInput_Prompt_qKFZZs_text()}
+]
+
+# TextInput_Prompt_qKFZZs_text()
+- Which Episode do you wan to know more about?
+# SendActivity_zgtEvA()
+[Activity
+    Text = ${SendActivity_zgtEvA_text()}
+]
+
+# SendActivity_zgtEvA_text()
+- Ok, searching for ${user.CharacterName}

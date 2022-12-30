@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# SendActivity_I19Ac5()
+[Activity
+    Text = ${SendActivity_I19Ac5_text()}
+]
+
+# SendActivity_I19Ac5_text()
+- Get Character Overall Trigger -  ${userinput.CharacterName}
+# SendActivity_0WA2CN()
+[Activity
+    Text = ${SendActivity_0WA2CN_text()}
+]
+
+# SendActivity_0WA2CN_text()
+- ${response}

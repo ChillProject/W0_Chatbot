@@ -1,0 +1,57 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "3Bx4aW",
+    "name": "GetCharacterOverall",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "K3ySo2"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "I19Ac5"
+          },
+          "activity": "${SendActivity_I19Ac5()}"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "cAKk81"
+          },
+          "resultProperty": "turn.results",
+          "method": "GET",
+          "url": "https://rickandmortyapi.com/api/character/?name=${userinput.CharacterName}",
+          "responseType": "json"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "0ThKiT"
+          },
+          "property": "response",
+          "value": "turn.results"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "0WA2CN"
+          },
+          "activity": "${SendActivity_0WA2CN()}"
+        }
+      ]
+    }
+  ],
+  "generator": "GetCharacterOverall.lg",
+  "recognizer": "GetCharacterOverall.lu.qna",
+  "id": "GetCharacterOverall"
+}

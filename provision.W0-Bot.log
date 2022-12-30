@@ -1,0 +1,19 @@
+{
+  "profileName": "W0-Bot",
+  "jobId": "67ad6ecb-8490-4fda-91c4-d337c443165e",
+  "projectId": "93230.13696007458",
+  "time": "2022-12-30T09:12:02.611Z",
+  "log": [
+    "Creating Azure resources...",
+    "Checking the Existence of the Resource Group ...",
+    "Use the Resource Group: TEMG_UBS at eastasia",
+    "> Creating App Registration ...",
+    "Start to add password for App, Id : f1a05319-6ca3-4097-a0c4-bf6a4f88cc85",
+    "> Create App Registration Success! ID: f1a05319-6ca3-4097-a0c4-bf6a4f88cc85",
+    "Deploying Web App Resource ...",
+    "Deploying Bot Resource ...",
+    "Deploying Luis Authoring Resource ...",
+    "Deploying Luis Resource ...",
+    "Provisioning completed successfully!"
+  ]
+}

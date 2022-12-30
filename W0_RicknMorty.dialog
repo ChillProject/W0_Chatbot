@@ -1,0 +1,254 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "name": "W0_RicknMorty",
+    "description": "",
+    "id": "A79tBe"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "comment": "This trigger runs when a conversation update activity is sent to the bot. This indicates a user or bot being added or removed from a conversation."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item",
+            "comment": "For each member added to the conversation."
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else",
+                "comment": "Checks that that member added ID does not match the bot ID. This prevents the greeting message from being sent when the bot is added to a conversation."
+              },
+              "condition": "=string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Greeting()}"
+                },
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "KCiOWu"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "prompt": "${ChoiceInput_Prompt_KCiOWu()}",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  },
+                  "property": "user.wantedaction",
+                  "outputFormat": "value",
+                  "choices": [
+                    "Character Details",
+                    "Location Details",
+                    "Episode Details"
+                  ],
+                  "style": "heroCard"
+                },
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "ULcglb"
+                  },
+                  "condition": "user.wantedaction",
+                  "cases": [
+                    {
+                      "value": "Character Details",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.TextInput",
+                          "$designer": {
+                            "id": "X5jcm5"
+                          },
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${TextInput_Prompt_X5jcm5()}",
+                          "unrecognizedPrompt": "",
+                          "invalidPrompt": "",
+                          "property": "user.CharacterName"
+                        },
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "zgtEvA"
+                          },
+                          "activity": "${SendActivity_zgtEvA()}"
+                        },
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "mnrAEE"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "GetCharacterOverall",
+                          "options": {
+                            "CharacterName": "${user.CharacterName}"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "value": "Location Details",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.TextInput",
+                          "$designer": {
+                            "id": "PWRV3n"
+                          },
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${TextInput_Prompt_PWRV3n()}",
+                          "unrecognizedPrompt": "",
+                          "invalidPrompt": "",
+                          "defaultValueResponse": "",
+                          "property": "user.LocationName"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "Episode Details",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.TextInput",
+                          "$designer": {
+                            "id": "qKFZZs"
+                          },
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${TextInput_Prompt_qKFZZs()}",
+                          "unrecognizedPrompt": "",
+                          "invalidPrompt": "",
+                          "defaultValueResponse": "",
+                          "property": "user.EpisodeName"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "value": "dialog.foreach.value"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u",
+        "comment": "This trigger fires when an incoming activity is not handled by any other trigger."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "CWzk6M",
+            "comment": "Get Intent Analysis from CLU Model"
+          },
+          "resultProperty": "turn.results",
+          "method": "POST",
+          "url": "https://w0-clu.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
+          "headers": {
+            "Ocp-Apim-Subscription-Key": "552ab4ce292f44958434d136bc58cf71"
+          },
+          "responseType": "json",
+          "body": {
+            "kind": "Conversation",
+            "analysisInput": {
+              "conversationItem": {
+                "id": "${turn.activity.from.id}",
+                "text": "${turn.activity.text}",
+                "modality": "text",
+                "language": "en-us",
+                "participantId": "${turn.Activity.Recipient.id}"
+              }
+            },
+            "parameters": {
+              "projectName": "W0_CLU",
+              "verbose": true,
+              "deploymentName": "ricknmorty_model",
+              "stringIndexType": "TextElement_V8"
+            }
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "1BKPdN"
+          },
+          "property": "conversation.topIntent",
+          "value": "${turn.results.content.result.prediction.topIntent}"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "4b6cTW"
+          },
+          "default": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "CDWo6u"
+              },
+              "activityProcessed": true,
+              "dialog": "IntentNotUnderstood"
+            }
+          ],
+          "condition": "conversation.topIntent",
+          "cases": [
+            {
+              "value": "GetCharacterOverall",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "Bn1bju"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetCharacterOverall",
+                  "options": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "W0_RicknMorty.lg",
+  "id": "W0_RicknMorty",
+  "recognizer": "W0_RicknMorty.lu.qna"
+}
